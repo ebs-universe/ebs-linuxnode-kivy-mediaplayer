@@ -15,7 +15,7 @@ setuptools.setup(
     author='Chintalagiri Shashank',
     author_email='shashank.chintalagiri@gmail.com',
 
-    description='Mediaplayer for EBS Linuxnode Kivy Applications',
+    description='Media Player for EBS Linuxnode Kivy Applications',
     long_description='',
 
     packages=setuptools.find_packages(),

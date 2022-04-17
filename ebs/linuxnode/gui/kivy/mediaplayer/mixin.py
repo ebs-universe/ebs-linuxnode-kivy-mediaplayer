@@ -6,7 +6,7 @@ from ebs.linuxnode.mediaplayer.mixin import MediaPlayerCoreMixin
 
 from .players.video import VideoPlayer
 from .players.image import ImagePlayer
-from .players.pdf import PDFPlayer
+from .players.pdf import PdfPlayer
 
 
 class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
@@ -16,9 +16,9 @@ class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
 
     def _install_builtin_players(self):
         super(MediaPlayerGuiMixin, self)._install_builtin_players()
-        self.install_player(VideoPlayer)
-        self.install_player(PDFPlayer)
-        self.install_player(ImagePlayer)
+        self.install_player(VideoPlayer(self))
+        self.install_player(PdfPlayer(self))
+        self.install_player(ImagePlayer(self))
 
     def media_play(self, content, duration=None, **kwargs):
         deferred = super(MediaPlayerGuiMixin, self).media_play(content, duration=duration, **kwargs)

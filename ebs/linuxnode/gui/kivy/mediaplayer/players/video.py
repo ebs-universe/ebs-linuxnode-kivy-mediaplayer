@@ -20,12 +20,9 @@ class VideoPlayer(MediaPlayerBase):
         def _while_playing(*_):
             self._player.opacity = 1
         self._player.bind(texture=_while_playing)
-
-        def _when_done(*_):
-            self.stop()
-        self._player.bind(eos=_when_done)
-
+        self._player.bind(eos=lambda *_: self.actual.media_stop())
         return self._player
 
     def _stop(self):
-        self._player.unload()
+        if self._player:
+            self._player.unload()

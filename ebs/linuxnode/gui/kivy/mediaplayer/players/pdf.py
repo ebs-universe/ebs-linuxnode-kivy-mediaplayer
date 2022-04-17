@@ -4,7 +4,7 @@ from kivy_garden.ebs.pdfplayer import PDFPlayer
 from ebs.linuxnode.mediaplayer.base import MediaPlayerBase
 
 
-class ImagePlayer(MediaPlayerBase):
+class PdfPlayer(MediaPlayerBase):
     _extensions = ['.pdf']
 
     def _play(self, filepath, interval=None):

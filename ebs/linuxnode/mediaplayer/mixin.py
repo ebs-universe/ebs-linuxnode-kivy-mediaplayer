@@ -29,7 +29,7 @@ class MediaPlayerCoreMixin(BaseMixin):
         self._media_playing = None
 
     def install_player(self, player, index=0):
-        self.log.info("Installing MediaPlayer {}".format(player))
+        self.log.info("Installing Media Player {}".format(player.__class__))
         self._players.insert(index, player)
 
     def _install_builtin_players(self):
@@ -64,11 +64,12 @@ class MediaPlayerCoreMixin(BaseMixin):
         player: MediaPlayerBase
         for player in self._players:
             if player.check_support(content):
-                self.log.debug("Showing content {filename} using {player}",
-                               filename=os.path.basename(content),
-                               player=player)
+                self.log.info("Showing content '{filename}' using <{player}>",
+                              filename=os.path.basename(content),
+                              player=player.__class__.__name__)
                 self._current_player = player
                 self._media_playing = player.play(content, **kwargs)
+                break
 
         self._media_player_deferred = Deferred()
         return self._media_player_deferred
