@@ -36,9 +36,7 @@ class MediaPlayerCoreMixin(BaseMixin):
         pass
 
     def install(self):
-        print("Here")
         super(MediaPlayerCoreMixin, self).install()
-        print("Installing")
         self._install_builtin_players()
 
     def media_play(self, content, duration=None, **kwargs):
@@ -76,6 +74,8 @@ class MediaPlayerCoreMixin(BaseMixin):
         return self._media_player_deferred
 
     def media_stop(self, forced=False):
+        if not self._mediaplayer_now_playing:
+            return
         self.log.info("Stopping Media : {0}".format(self._mediaplayer_now_playing))
         if self._mediaplayer_collision_count:
             self.log.info("End Offset by {0} collisions."
