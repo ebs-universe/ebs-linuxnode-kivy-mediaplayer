@@ -17,10 +17,14 @@ class PlayerBusy(Exception):
 
 class MediaPlayerBase(ABC):
     _extensions = []
+    _is_visual = True
 
     def __init__(self, actual):
         self._actual = actual
         self._player = None
+
+    def is_visual(self):
+        return self._is_visual
 
     @property
     def actual(self):

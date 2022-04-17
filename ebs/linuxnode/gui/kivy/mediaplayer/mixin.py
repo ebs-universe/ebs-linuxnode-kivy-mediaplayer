@@ -21,21 +21,28 @@ class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
         self.install_player(ImagePlayer)
 
     def media_play(self, content, duration=None, **kwargs):
-        self.gui_bg_pause()
         deferred = super(MediaPlayerGuiMixin, self).media_play(content, duration=duration, **kwargs)
-        self.gui_mediaview.make_opaque()
-        self.gui_mediaview.add_widget(self._media_playing)
+        if self._current_player.is_visual:
+            self.gui_bg_pause()
+            self.gui_mediaview.make_opaque()
+            self.gui_mediaview.add_widget(self._media_playing)
         return deferred
 
     def media_stop(self, forced=False):
-        self.gui_mediaview.clear_widgets()
+        if self._current_player:
+            is_visual = self._current_player.is_visual
+        else:
+            is_visual = False
+        if is_visual:
+            self.gui_mediaview.clear_widgets()
         super(MediaPlayerGuiMixin, self).media_stop(forced=forced)
 
         def _resume_bg():
             if not self._mediaplayer_now_playing:
                 self.gui_bg_resume()
                 self.gui_mediaview.make_transparent()
-        self.reactor.callLater(0.1, _resume_bg)
+        if is_visual:
+            self.reactor.callLater(0.1, _resume_bg)
 
     def stop(self):
         super(MediaPlayerGuiMixin, self).stop()
