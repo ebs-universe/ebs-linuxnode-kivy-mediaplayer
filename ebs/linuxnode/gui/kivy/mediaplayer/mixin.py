@@ -7,6 +7,8 @@ from ebs.linuxnode.mediaplayer.mixin import MediaPlayerCoreMixin
 from ebs.linuxnode.gui.kivy.mediaplayer.manager import KivyMediaPlayerManager
 from ebs.linuxnode.mediaplayer.manager import MAIN
 
+from ebs.linuxnode.gui.kivy.background.mediaplayer import MediaPlayerBackgroundProvider
+
 
 class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
     def __init__(self, *args, **kwargs):
@@ -15,6 +17,7 @@ class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
 
     def install(self):
         super(MediaPlayerGuiMixin, self).install()
+        self.install_background_provider(MediaPlayerBackgroundProvider(self))
         self.install_media_player_manager(
             KivyMediaPlayerManager(self, MAIN, self.gui_mediaview,
                                    on_play=self.gui_bg_pause,

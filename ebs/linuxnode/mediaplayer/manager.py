@@ -64,6 +64,14 @@ class MediaPlayerManager(object):
     def install(self):
         self._install_builtin_players()
 
+    def check_supports(self, target):
+        if not os.path.exists(target):
+            return False
+        for player in self._players:
+            if player.check_support(target):
+                return True
+        return False
+
     def play(self, content, duration=None, **kwargs):
         # kwargs : loop=False, interval=None
         # Play the media file at filepath. If loop is true, restart the media

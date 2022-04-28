@@ -7,7 +7,7 @@ from ebs.linuxnode.mediaplayer.base import MediaPlayerBase
 class VideoPlayer(MediaPlayerBase):
     _extensions = ['*']
 
-    def _play(self, filepath, loop=False):
+    def _play(self, filepath, loop=False, bgcolor=(0, 0, 0, 1)):
         if loop:
             eos = 'loop'
         else:
