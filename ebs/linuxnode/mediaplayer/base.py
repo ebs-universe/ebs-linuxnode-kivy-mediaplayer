@@ -28,7 +28,10 @@ class MediaPlayerBase(ABC):
 
     @property
     def actual(self):
-        return self._actual
+        if hasattr(self._actual, 'actual'):
+            return self._actual.actual
+        else:
+            return self._actual
 
     def check_support(self, filepath):
         if self._extensions[0] == '*':
