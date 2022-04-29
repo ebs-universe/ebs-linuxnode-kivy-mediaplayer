@@ -134,3 +134,9 @@ class MediaPlayerManager(object):
         if self._deferred:
             self._deferred.callback(forced)
             self._deferred = None
+
+    def pause(self):
+        self._current_player.pause()
+
+    def resume(self):
+        self._current_player.resume()

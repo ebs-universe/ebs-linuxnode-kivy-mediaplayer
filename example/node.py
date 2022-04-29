@@ -4,6 +4,7 @@ from twisted.internet import reactor
 from ebs.linuxnode.gui.kivy.core.basenode import BaseIoTNodeGui
 from ebs.linuxnode.gui.kivy.mediaplayer.mixin import MediaPlayerGuiMixin
 from kivy_garden.ebs.clocks.digital import SimpleDigitalClock
+from ebs.linuxnode.gui.kivy.background.manager import BackgroundSpec
 
 
 class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
@@ -25,8 +26,9 @@ class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
         reactor.callLater(30, self._set_bg, '0.5:1.0:0.5:1.0')
         reactor.callLater(40, self._set_bg, None)
         # Install kivy_garden.ebs.clocks
-        reactor.callLater(50, self._set_bg, 'structured:clock')
-        reactor.callLater(60, self._set_bg, 'video.mp4')
+        # reactor.callLater(50, self._set_bg, 'structured:clock')
+        reactor.callLater(50, self._set_bg, 'video-2.mp4')
+        reactor.callLater(60, self._set_bg, BackgroundSpec('video-2.mp4', callback=lambda _: self._set_bg('video.mp4')))
         reactor.callLater(70, self._set_bg, 'pdf.pdf')
 
     def start(self):

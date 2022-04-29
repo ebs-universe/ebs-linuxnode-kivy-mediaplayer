@@ -26,3 +26,11 @@ class VideoPlayer(MediaPlayerBase):
     def _stop(self):
         if self._player:
             self._player.unload()
+
+    def _pause(self):
+        if self._player:
+            self._player.state = 'pause'
+
+    def _resume(self):
+        if self._player:
+            self._player.state = 'play'

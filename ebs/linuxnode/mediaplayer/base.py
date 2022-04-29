@@ -22,6 +22,7 @@ class MediaPlayerBase(ABC):
     def __init__(self, actual):
         self._actual = actual
         self._player = None
+        self._paused = False
 
     def is_visual(self):
         return self._is_visual
@@ -45,6 +46,7 @@ class MediaPlayerBase(ABC):
     def play(self, filepath, **kwargs):
         if self._player:
             raise PlayerBusy(self, self._player)
+        self._paused = False
         return self._play(filepath, **kwargs)
 
     @abstractmethod
@@ -54,3 +56,21 @@ class MediaPlayerBase(ABC):
     def stop(self):
         self._stop()
         self._player = None
+
+    @abstractmethod
+    def _pause(self):
+        pass
+
+    def pause(self):
+        if self._player:
+            self._pause()
+        self._paused = True
+
+    @abstractmethod
+    def _resume(self):
+        pass
+
+    def resume(self):
+        if self._player and self._paused:
+            self._resume()
+        self._paused = False

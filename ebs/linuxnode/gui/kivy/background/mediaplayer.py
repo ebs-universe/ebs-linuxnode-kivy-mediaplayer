@@ -19,18 +19,22 @@ class MediaPlayerBackgroundProvider(BackgroundProviderBase):
             rv = self._mpm.check_supports(target)
         return rv
 
-    def play(self, target, **kwargs):
-        self._mpm.play(target, **kwargs)
+    def play(self, target, duration=None, callback=None, **kwargs):
+        if duration or not callback:
+            kwargs.setdefault('loop', True)
+        d = self._mpm.play(target, duration=duration, **kwargs)
+        if callback:
+            d.addCallback(callback)
         return self._widget
 
     def stop(self):
         self._mpm.stop()
 
     def pause(self):
-        pass
+        self._mpm.pause()
 
     def resume(self):
-        pass
+        self._mpm.resume()
 
     @property
     def widget(self):
