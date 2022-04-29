@@ -132,8 +132,9 @@ class MediaPlayerManager(object):
             self._now_playing = None
 
         if self._deferred:
-            self._deferred.callback(forced)
+            d = self._deferred
             self._deferred = None
+            d.callback(forced)
 
     def pause(self):
         self._current_player.pause()

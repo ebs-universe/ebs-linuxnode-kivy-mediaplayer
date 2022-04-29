@@ -13,13 +13,14 @@ class PdfPlayer(MediaPlayerBase):
                                  loop=loop)
         if interval:
             self._player.interval = interval
+        self._player.bind(on_done=lambda *_: self._actual.stop())
         return self._player
 
     def _stop(self):
         self._player.stop()
 
     def _pause(self):
-        pass
+        self._player.pause()
 
     def _resume(self):
-        pass
+        self._player.resume()

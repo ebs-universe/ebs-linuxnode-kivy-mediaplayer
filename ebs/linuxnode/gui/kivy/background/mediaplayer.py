@@ -24,7 +24,7 @@ class MediaPlayerBackgroundProvider(BackgroundProviderBase):
             kwargs.setdefault('loop', True)
         d = self._mpm.play(target, duration=duration, **kwargs)
         if callback:
-            d.addCallback(callback)
+            d.addBoth(callback)
         return self._widget
 
     def stop(self):

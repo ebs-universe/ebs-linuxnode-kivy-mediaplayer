@@ -16,6 +16,9 @@ class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
     def _set_bg(self, target):
         self.gui_bg = target
 
+    def _set_bg_sequence(self, targets):
+        self.gui_bg_sequence = targets
+
     @property
     def clock(self):
         return SimpleDigitalClock()
@@ -31,6 +34,17 @@ class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
         reactor.callLater(60, self._set_bg, BackgroundSpec('video-2.mp4', callback=lambda _: self._set_bg('video.mp4')))
         reactor.callLater(70, self._set_bg, 'pdf.pdf')
 
+    def _background_series_example(self):
+        bgseries = [
+            BackgroundSpec('1.0:0.5:0.5:1.0', duration=10),
+            BackgroundSpec('image.jpg', duration=10),
+            'video-2.mp4',
+            'video.mp4',
+            'pdf.pdf',
+            BackgroundSpec(None, duration=10),
+        ]
+        reactor.callLater(5, self._set_bg_sequence, bgseries)
+
     def start(self):
         super(ExampleNode, self).start()
-        self._background_example()
+        self._background_series_example()
