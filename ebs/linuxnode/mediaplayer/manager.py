@@ -1,6 +1,7 @@
 
 
 import os
+import time
 from twisted import logger
 from twisted.internet.defer import Deferred
 
@@ -34,6 +35,8 @@ class MediaPlayerManager(object):
         self._end_call = None
         self._collision_count = 0
         self._media_playing = None
+        self._paused = False
+        self._eresidual = None
 
     @property
     def mpid(self):
@@ -128,6 +131,8 @@ class MediaPlayerManager(object):
         if self._end_call and self._end_call.active():
             self._end_call.cancel()
 
+        self._eresidual = None
+
         if self._now_playing:
             self._now_playing = None
 
@@ -137,7 +142,22 @@ class MediaPlayerManager(object):
             d.callback(forced)
 
     def pause(self):
+        self.log.info("Pausing {} {}".format(self.__class__, self._media_playing))
+        if self._paused:
+            return
+        if self._end_call and self._end_call.active():
+            ietime = self._end_call.getTime()
+            ptime = time.time()
+            self._eresidual = ietime - ptime
+            self._end_call.cancel()
         self._current_player.pause()
+        self._paused = True
 
     def resume(self):
-        self._current_player.resume()
+        self.log.info("Resuming {} {}".format(self.__class__, self._media_playing))
+        if self._paused:
+            self._current_player.resume()
+            self._paused = False
+            if self._eresidual:
+                self._end_call = self.actual.reactor.callLater(self._eresidual, self.stop)
+                self._eresidual = None

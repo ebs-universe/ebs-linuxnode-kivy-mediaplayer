@@ -9,9 +9,9 @@ from ebs.linuxnode.gui.kivy.background.manager import BackgroundSpec
 
 class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
     def _mediaplayer_example(self):
-        reactor.callLater(5, self.mediaview.play, 'image.jpg', duration=10)
-        reactor.callLater(20, self.mediaview.play, 'video.mp4')
-        reactor.callLater(55, self.mediaview.play, 'pdf.pdf', duration=30)
+        reactor.callLater(10, self.mediaview.play, 'image.jpg', duration=10)
+        reactor.callLater(50, self.mediaview.play, 'video-2.mp4')
+        reactor.callLater(70, self.mediaview.play, 'pdf.pdf', duration=30)
 
     def _set_bg(self, target):
         self.gui_bg = target
@@ -36,9 +36,8 @@ class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
 
     def _background_series_example(self):
         bgseries = [
-            BackgroundSpec('1.0:0.5:0.5:1.0', duration=10),
+            BackgroundSpec('1.0:0.5:0.5:1.0', duration=30),
             BackgroundSpec('image.jpg', duration=10),
-            'video-2.mp4',
             'video.mp4',
             'pdf.pdf',
             BackgroundSpec(None, duration=10),
@@ -48,3 +47,4 @@ class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
     def start(self):
         super(ExampleNode, self).start()
         self._background_series_example()
+        self._mediaplayer_example()
