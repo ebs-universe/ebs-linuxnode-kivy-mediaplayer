@@ -14,6 +14,10 @@ class KivyMediaPlayerManager(MediaPlayerManager):
         self._on_stop = on_stop
         super(KivyMediaPlayerManager, self).__init__(actual, mpid)
 
+    @property
+    def target_container(self):
+        return self._target_container
+
     def _install_builtin_players(self):
         super(KivyMediaPlayerManager, self)._install_builtin_players()
         self.install_player(VideoPlayer(self))
