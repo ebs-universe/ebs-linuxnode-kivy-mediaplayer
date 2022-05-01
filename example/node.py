@@ -6,8 +6,14 @@ from ebs.linuxnode.gui.kivy.mediaplayer.mixin import MediaPlayerGuiMixin
 from kivy_garden.ebs.clocks.digital import SimpleDigitalClock
 from ebs.linuxnode.gui.kivy.background.manager import BackgroundSpec
 
+try:
+    from ebs.linuxnode.gui.kivy.mediaplayer.omxplayer import OMXPlayerGuiMixin
+    BaseNode = OMXPlayerGuiMixin
+except ImportError:
+    BaseNode = MediaPlayerGuiMixin
 
-class ExampleNode(MediaPlayerGuiMixin, BaseIoTNodeGui):
+
+class ExampleNode(BaseNode, BaseIoTNodeGui):
     def _mediaplayer_example(self):
         reactor.callLater(10, self.mediaview.play, 'image.jpg', duration=10)
         reactor.callLater(50, self.mediaview.play, 'video-2.mp4')
