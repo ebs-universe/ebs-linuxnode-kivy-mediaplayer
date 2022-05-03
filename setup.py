@@ -2,7 +2,7 @@ import setuptools
 
 _requires = [
     'setuptools-scm',
-    'ebs-linuxnode-gui-kivy-core>=2.4.0',
+    'ebs-linuxnode-gui-kivy-core>=3.0.2',
     # EBS Kivy Widgets
     'kivy_garden.ebs.core>=1.3.0',
     'kivy_garden.ebs.pdfplayer>=2.0.0',
