@@ -1,7 +1,7 @@
 
 
 from kivy.uix.boxlayout import BoxLayout
-from ebs.linuxnode.gui.kivy.background.base import BackgroundProviderBase
+from ebs.linuxnode.core.background import BackgroundProviderBase
 from ebs.linuxnode.gui.kivy.mediaplayer.manager import KivyMediaPlayerManager
 from ebs.linuxnode.mediaplayer.manager import BACKGROUND
 

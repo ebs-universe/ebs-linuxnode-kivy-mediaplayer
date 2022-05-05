@@ -20,8 +20,8 @@ class MediaPlayerGuiMixin(MediaPlayerCoreMixin, BaseIoTNodeGui):
         self.install_background_provider(MediaPlayerBackgroundProvider(self))
         self.install_media_player_manager(
             KivyMediaPlayerManager(self, MAIN, self.gui_mediaview,
-                                   on_play=self.gui_bg_pause,
-                                   on_stop=self.gui_bg_resume)
+                                   on_play=self.bg_pause,
+                                   on_stop=self.bg_resume)
         )
 
     @property
