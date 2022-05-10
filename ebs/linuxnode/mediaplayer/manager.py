@@ -94,9 +94,6 @@ class MediaPlayerManager(object):
             self.log.warn("Could not find media to play at {filepath}",
                           filepath=content)
             return
-        if duration:
-            self._end_call = self.actual.reactor.callLater(duration, self.stop)
-        self._now_playing = os.path.basename(content)
 
         player: MediaPlayerBase
         for player in self._players:
@@ -105,7 +102,10 @@ class MediaPlayerManager(object):
                               filename=os.path.basename(content), mpid=self.mpid,
                               player=player.__class__.__name__)
                 self._current_player = player
+                self._now_playing = os.path.basename(content)
                 self._media_playing = player.play(content, **kwargs)
+                if duration:
+                    self._end_call = self.actual.reactor.callLater(duration, self.stop)
                 break
         if not self._current_player:
             self.log.info("Have Players: {}".format(self._players))
