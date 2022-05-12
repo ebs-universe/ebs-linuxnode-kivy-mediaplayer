@@ -40,5 +40,5 @@ class MediaPlayerBackgroundProvider(BackgroundProviderBase):
     @property
     def widget(self):
         if not self._widget:
-            self._widget = ColorBoxLayout(bgcolor=(0.4, 0.4, 0.4, 1))
+            self._widget = ColorBoxLayout(bgcolor=(0, 0, 0, 1))
         return self._widget
